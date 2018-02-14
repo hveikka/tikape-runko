@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import tikape.runko.domain.Annos;
 import tikape.runko.domain.AnnosRaakaAine;
@@ -107,6 +108,52 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         stmt.executeUpdate();
         stmt.close();
         conn.close();
+    }
+    
+    public HashMap raakaAineidenKayttomaarat() throws SQLException {
+        HashMap<String, String> kayttomaarat = new HashMap<>();
+        List<RaakaAine> raakaAineet= raakaAineDao.findAll();
+        
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT (AnnosID) FROM "
+                + "AnnosRaakaAine WHERE RaakaAineID = ?");
+        for (int i = 0; i < raakaAineet.size(); i++) {
+            stmt.setInt(1, raakaAineet.get(i).getId());
+            
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            
+            kayttomaarat.put(raakaAineet.get(i).getNimi(), Integer.toString(rs.getInt(1)));   
+        }
+        
+        stmt.close();
+        conn.close();
+        return kayttomaarat;
+    }
+    
+    public Double annostenKeskimaarainenRaakaAineMaara() throws SQLException {
+        List<Annos> annokset= annosDao.findAll();
+        
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT (RaakaAineID) FROM "
+                + "AnnosRaakaAine WHERE AnnosID = ?");
+        
+        int summa = 0;
+        for (int i = 0; i < annokset.size(); i++) {
+            stmt.setInt(1, annokset.get(i).getId());
+            
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            summa+=rs.getInt(1);
+        }
+        stmt.close();
+        conn.close();
+        
+        double keskiarvo = 1.0 * summa / annokset.size();
+        
+        keskiarvo = Math.round(keskiarvo * 100.0) / 100.0;
+
+        return keskiarvo;
     }
     
 }
