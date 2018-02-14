@@ -45,7 +45,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
         ResultSet rs = stmt.executeQuery();
         
-        while(rs.next()) {
+        while (rs.next()) {
             Integer annosID = rs.getInt("AnnosID");
             Annos annos = annosDao.findOne(annosID);
             Integer raakaAineID = rs.getInt("RaakaAineID");
@@ -65,12 +65,12 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
     
     public List<AnnosRaakaAine> findAll(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = " +key+";");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = " + key);
 
         ResultSet rs = stmt.executeQuery();
         List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
         
-        while(rs.next()) {
+        while (rs.next()) {
             Annos annos = annosDao.findOne(key);
             Integer raakaAineID = rs.getInt("RaakaAineID");
             RaakaAine raakaAine = raakaAineDao.findOne(raakaAineID);
@@ -117,6 +117,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT (AnnosID) FROM "
                 + "AnnosRaakaAine WHERE RaakaAineID = ?");
+        
         for (int i = 0; i < raakaAineet.size(); i++) {
             stmt.setInt(1, raakaAineet.get(i).getId());
             
