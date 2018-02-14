@@ -61,10 +61,52 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         conn.close();
         return annosRaakaAineet;
     }
+    
+    public List<AnnosRaakaAine> findAll(Integer key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = " +key+";");
+
+        ResultSet rs = stmt.executeQuery();
+        List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
+        
+        while(rs.next()) {
+            Annos annos = annosDao.findOne(key);
+            Integer raakaAineID = rs.getInt("RaakaAineID");
+            RaakaAine raakaAine = raakaAineDao.findOne(raakaAineID);
+            String jarjestys = rs.getString("jarjestys");
+            String maara = rs.getString("maara");
+            String ohje = rs.getString("ohje");
+            
+            AnnosRaakaAine annosRaakaAine = new AnnosRaakaAine(annos, raakaAine, jarjestys, maara, ohje);
+            annosRaakaAineet.add(annosRaakaAine);
+        }
+        
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return annosRaakaAineet;
+    }
 
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void poistaAnnos(Integer key) throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE AnnosID = " + key);
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+    }
+    
+    public void poistaRaakaAine(Integer key) throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE RaakaAineID = " + key);
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
     }
     
 }

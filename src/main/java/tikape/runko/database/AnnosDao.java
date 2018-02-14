@@ -106,7 +106,6 @@ public class AnnosDao implements Dao<Annos, Integer> {
                 + " VALUES (?)");
         stmt.setString(1, annos.getNimi());
 
-
         stmt.executeUpdate();
         stmt.close();
 
@@ -134,7 +133,6 @@ public class AnnosDao implements Dao<Annos, Integer> {
                 + " nimi = ? WHERE id = ?");
         stmt.setString(1, annos.getNimi());
         stmt.setInt(2, annos.getId());
-
 
         stmt.executeUpdate();
 
