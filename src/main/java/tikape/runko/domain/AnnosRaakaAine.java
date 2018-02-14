@@ -46,23 +46,5 @@ public class AnnosRaakaAine {
         return this.ohje;
     }
     
-    public void setAnnos(Annos annos) {
-        this.annos = annos;
-    }
     
-    public void setRaakaAine(RaakaAine raakaAine) {
-        this.raakaAine = raakaAine;
-    }
-    
-    public void setJarjestys(String jarjestys) {
-        this.jarjestys = jarjestys;
-    }
-    
-    public void setMaara(String maara) {
-        this.maara= maara;
-    }
-    
-    public void setOhje(String ohje) {
-        this.ohje = ohje;
-    }
 }
