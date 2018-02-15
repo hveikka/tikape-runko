@@ -106,7 +106,6 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
                 + " VALUES (?)");
         stmt.setString(1, raakaAine.getNimi());
 
-
         stmt.executeUpdate();
         stmt.close();
 
@@ -135,13 +134,35 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         stmt.setString(1, raakaAine.getNimi());
         stmt.setInt(2, raakaAine.getId());
 
-
         stmt.executeUpdate();
 
         stmt.close();
         conn.close();
 
         return raakaAine;
+    }
+    
+    public RaakaAine findOne(String key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM RaakaAine WHERE nimi = ?");
+        stmt.setString(1, key);
+
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return null;
+        }
+
+        Integer id = rs.getInt("id");
+        String nimi = rs.getString("nimi");
+
+        RaakaAine ra = new RaakaAine(id, nimi);
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return ra;
     }
     
 }

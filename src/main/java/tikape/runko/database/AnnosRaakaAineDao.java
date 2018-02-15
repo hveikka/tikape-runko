@@ -63,7 +63,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         return annosRaakaAineet;
     }
     
-    public List<AnnosRaakaAine> findAll(Integer key) throws SQLException {
+    public List<AnnosRaakaAine> haeAnnoksenRaakaAineet(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = " + key);
 
@@ -111,7 +111,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
     }
     
     public HashMap raakaAineidenKayttomaarat() throws SQLException {
-        HashMap<String, String> kayttomaarat = new HashMap<>();
+        HashMap<String, Integer> kayttomaarat = new HashMap<>();
         List<RaakaAine> raakaAineet= raakaAineDao.findAll();
         
         Connection conn = database.getConnection();
@@ -124,7 +124,7 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
             ResultSet rs = stmt.executeQuery();
             rs.next();
             
-            kayttomaarat.put(raakaAineet.get(i).getNimi(), Integer.toString(rs.getInt(1)));   
+            kayttomaarat.put(raakaAineet.get(i).getNimi(), rs.getInt(1));   
         }
         
         stmt.close();

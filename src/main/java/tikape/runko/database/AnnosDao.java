@@ -142,4 +142,27 @@ public class AnnosDao implements Dao<Annos, Integer> {
         return annos;
     }
     
+    public Annos findOne(String key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Annos WHERE nimi = ?");
+        stmt.setString(1, key);
+
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return null;
+        }
+
+        Integer id = rs.getInt("id");
+        String nimi = rs.getString("nimi");
+
+        Annos a = new Annos(id, nimi);
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return a;
+    }
+    
 }
