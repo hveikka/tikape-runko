@@ -142,7 +142,7 @@ public class AnnosDao implements Dao<Annos, Integer> {
         return annos;
     }
     
-    public Annos findOne(String key) throws SQLException {
+    public Annos findByName(String key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Annos WHERE nimi = ?");
         stmt.setString(1, key);

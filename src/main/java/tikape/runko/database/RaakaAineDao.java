@@ -142,7 +142,7 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         return raakaAine;
     }
     
-    public RaakaAine findOne(String key) throws SQLException {
+    public RaakaAine findByName(String key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM RaakaAine WHERE nimi = ?");
         stmt.setString(1, key);
