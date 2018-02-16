@@ -49,11 +49,9 @@
         <ol>
             <li>
                 Raaka-aineet ja niitä käyttävien smoothieiden lukumäärät:<br/><br/>
-                
                 <ul>
-                    <li th:each="entry: ${testi}">
+                    <li th:each="entry: ${kayttomaarat}">
                         <span th:text="${entry.key} +', ' + ${entry.value}"></span>
-                
                     </li>
                 </ul>
             </li><br/>
@@ -65,7 +63,6 @@
                 Yhdessä smoothiessa on keskimäärin <span th:text="${keskiarvo}"></span> eri raaka-ainetta.
             </li>
         </ol>
-        
         <hr/>
         <ul>
             <li>

@@ -7,7 +7,6 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.AnnosDao;
 import tikape.runko.database.AnnosRaakaAineDao;
 import tikape.runko.database.Database;
-import tikape.runko.database.OpiskelijaDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Annos;
 import tikape.runko.domain.AnnosRaakaAine;
@@ -22,18 +21,9 @@ public class Main {
         AnnosDao annosDao = new AnnosDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
         AnnosRaakaAineDao annosRaakaAineDao = new AnnosRaakaAineDao(database, annosDao, raakaAineDao);
-        
-        get("/", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
-            map.put("annokset", annosDao.findAll());
-
-            return new ModelAndView(map, "index");
-        }, new ThymeleafTemplateEngine());
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
             map.put("annokset", annosDao.findAll());
 
             return new ModelAndView(map, "index");
@@ -64,7 +54,7 @@ public class Main {
         
         get("/raakaaineet/tilastoja", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("testi", annosRaakaAineDao.raakaAineidenKayttomaarat());
+            map.put("kayttomaarat", annosRaakaAineDao.raakaAineidenKayttomaarat());
             map.put("annosLkm", Integer.toString(annosDao.findAll().size()));
             map.put("raakaAineLkm", Integer.toString(raakaAineDao.findAll().size()));
             map.put("keskiarvo", annosRaakaAineDao.annostenKeskimaarainenRaakaAineMaara());
@@ -107,6 +97,7 @@ public class Main {
             res.redirect("/annokset");
             return "";
         });
+        
         post("/annokset/raakaAine", (req, res) -> {
             Annos a = annosDao.findByName(req.queryParams("annos"));
             RaakaAine ra = raakaAineDao.findByName(req.queryParams("raakaAine"));
