@@ -39,7 +39,7 @@ public class AnnosRaakaAine {
     }
     
     public String getMaara() {
-        return this.jarjestys;
+        return this.maara;
     }
     
     public String getOhje() {
