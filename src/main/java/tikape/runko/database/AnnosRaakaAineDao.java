@@ -156,5 +156,57 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
 
         return keskiarvo;
     }
+    public AnnosRaakaAine saveOrUpdate(AnnosRaakaAine object) throws SQLException {
+
+        return save(object);
+    }
+    private AnnosRaakaAine save(AnnosRaakaAine annosRaakaAine) throws SQLException {
+          
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine "
+                + "WHERE AnnosID = ? AND RaakaAineID = ?");
+        stmt.setInt(1, annosRaakaAine.getAnnos().getId());
+        stmt.setInt(2, annosRaakaAine.getRaakaAine().getId());
+        
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return null;
+        }
+
+        stmt = conn.prepareStatement("INSERT INTO AnnosRaakaAine"
+                + " (AnnosID, RaakaAineID, jarjestys, maara, ohje)"
+                + " VALUES (?, ?, ?, ?, ?)");
+        stmt.setInt(1, annosRaakaAine.getAnnos().getId());
+        stmt.setInt(2, annosRaakaAine.getRaakaAine().getId());
+        stmt.setString(3, annosRaakaAine.getJarjestys());
+        stmt.setString(4, annosRaakaAine.getMaara());
+        stmt.setString(5, annosRaakaAine.getOhje());
+
+        stmt.executeUpdate();
+        stmt.close();
+
+        stmt = conn.prepareStatement("SELECT * FROM AnnosRaakaAine"
+                + " WHERE maara = ? AND AnnosID = ? AND RaakaAineID = ? AND jarjestys = ? AND ohje = ?");
+        stmt.setString(1, annosRaakaAine.getMaara());
+        stmt.setInt(2, annosRaakaAine.getAnnos().getId());
+        stmt.setInt(3, annosRaakaAine.getRaakaAine().getId());
+        stmt.setString(4, annosRaakaAine.getJarjestys());
+        stmt.setString(5, annosRaakaAine.getOhje());
+        
+
+        rs = stmt.executeQuery();
+        rs.next(); 
+        
+        AnnosRaakaAine annosRa = new AnnosRaakaAine(annosRaakaAine.getAnnos(), 
+        annosRaakaAine.getRaakaAine(), rs.getString("jarjestys"), rs.getString("maara"), rs.getString("ohje"));
+
+
+        stmt.close();
+        rs.close();
+
+        conn.close();
+
+        return annosRa;
+    }
     
 }

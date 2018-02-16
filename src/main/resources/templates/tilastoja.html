@@ -1,0 +1,81 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Raaka-aine tilastoja</title>
+        
+        <link href="https://fonts.googleapis.com/css?family=Didact Gothic"
+              rel="stylesheet"
+        <meta charset="utf-8" />
+        <style type="text/css">
+            a {text-decoration:none;}
+            #main-header{
+                background-color: plum;
+                color:white;
+                padding-left: 20px;
+                padding-bottom: 0.1px;
+                padding-top: 0.1px;
+            }
+            ul{
+                list-style-type: square;
+            }
+            body{
+                font-family: 'Didact Gothic';
+            }
+            p{
+                margin-left: 20px;
+            }
+            hr{
+                border-top: 3px dashed #8c8b8b;
+                text-align: center;
+            }
+            form{
+                padding-left: 20px;
+            }
+            img{
+                padding-left: 20px;
+            }
+            img{
+                width: 370px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id = "main-header">
+            <h1>Raaka-aine tilastoja</h1>
+        </header>
+        
+        <ol>
+            <li>
+                Raaka-aineet ja niitä käyttävien smoothieiden lukumäärät:<br/><br/>
+                
+                <ul>
+                    <li th:each="entry: ${testi}">
+                        <span th:text="${entry.key} +', ' + ${entry.value}"></span>
+                
+                    </li>
+                </ul>
+            </li><br/>
+            <li>
+                Smoothieita on yhteensä <span th:text="${annosLkm}"></span> ja raaka-aineita
+                <span th:text="${raakaAineLkm}"></span>.
+            </li><br/>
+            <li>
+                Yhdessä smoothiessa on keskimäärin <span th:text="${keskiarvo}"></span> eri raaka-ainetta.
+            </li>
+        </ol>
+        
+        <hr/>
+        <ul>
+            <li>
+                <a href="/raakaaineet">Takaisin</a><br/>
+            </li>
+            <li>
+                <a href="/">Smoothielistaukseen</a><br/>
+            </li>
+        </ul><br/>
+        <img src="http://s3-us-west-2.amazonaws.com/ghstrnch/2011-sabotage-report-chiditarod-shopping-cart-race-chicago-s-epic-8ttqmW-clipart.jpg"
+      
+    </body>
+</html>

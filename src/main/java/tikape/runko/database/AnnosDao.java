@@ -89,6 +89,14 @@ public class AnnosDao implements Dao<Annos, Integer> {
     }
     private Annos save(Annos annos) throws SQLException {
         
+        String nimi = annos.getNimi();
+        String[] palat = nimi.split(" ");
+        String siistittyNimi = "";
+        for (String palat1 : palat) {
+            siistittyNimi += siistiMerkkijono(palat1.trim()) + " ";
+        }
+        annos.setNimi(siistittyNimi.trim());
+        
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Annos"
                 + " WHERE nimi = ?");
@@ -163,6 +171,16 @@ public class AnnosDao implements Dao<Annos, Integer> {
         connection.close();
 
         return a;
+    }
+    private String siistiMerkkijono (String merkkijono) {
+        if (merkkijono.length() == 0) {
+            return "";
+        }
+        if (merkkijono.length() == 1) {
+            return merkkijono.toUpperCase();
+        }
+
+        return merkkijono.substring(0,1).toUpperCase() + merkkijono.substring(1).toLowerCase();
     }
     
 }

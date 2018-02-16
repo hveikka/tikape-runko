@@ -89,6 +89,10 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     }
     private RaakaAine save(RaakaAine raakaAine) throws SQLException {
         
+        String nimi = raakaAine.getNimi();
+        nimi = siistiMerkkijono(nimi.trim());
+        raakaAine.setNimi(nimi);
+        
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM RaakaAine"
                 + " WHERE nimi = ?");
@@ -163,6 +167,17 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         connection.close();
 
         return ra;
+    }
+    
+    private String siistiMerkkijono (String merkkijono) {
+        if (merkkijono.length() == 0) {
+            return "";
+        }
+        if (merkkijono.length() == 1) {
+            return merkkijono.toUpperCase();
+        }
+
+        return merkkijono.substring(0,1).toUpperCase() + merkkijono.substring(1).toLowerCase();
     }
     
 }

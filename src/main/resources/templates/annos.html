@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Smoothie</title>
+        <link href="https://fonts.googleapis.com/css?family=Didact Gothic"
+              rel="stylesheet"
+        <meta charset="utf-8" />
+        <style type="text/css">
+            a {text-decoration:none;}
+            #main-header{
+                background-color: palevioletred;
+                color:white;
+                padding-left: 20px;
+                padding-bottom: 0.1px;
+                padding-top: 0.1px;
+            }
+            ul{
+                list-style-type: square;
+            }
+            body{
+                font-family: 'Didact Gothic';
+            }
+            p{
+                margin-left: 20px;
+            }
+            hr{
+                border-top: 3px dashed #8c8b8b;
+                text-align: center;
+            }
+            img{
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id = "main-header">
+            <h1><span th:text="${annos.nimi}">annos</span></h1>
+        </header>
+
+        <p>Resepti <span th:text="${annos.nimi}">smoothie</span> -smoothielle:</p>
+        
+        <ul>
+            <li th:each="annosRaakaAine: ${raakaAineet}">
+                <span th:text="${annosRaakaAine.jarjestys}" >jarjestys</span>
+                <span th:text="${annosRaakaAine.raakaAine.nimi}" >smoothien nimi</span>,
+                <span th:text="${annosRaakaAine.maara}" >maara</span>
+                <span th:text="${annosRaakaAine.ohje}" >ohje</span>
+            </li>      
+        </ul>
+        
+        <hr/>
+        <ul>
+            <li>
+                <a href="/annokset">Lisää reseptiin raaka-aineita</a>
+            </li>
+            <li>
+                <a href="/">Smoothielistaukseen</a>
+            </li>
+        </ul>
+         
+    </body>
+</html>

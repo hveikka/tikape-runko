@@ -1,0 +1,122 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Smoothiet</title>
+        <link href="https://fonts.googleapis.com/css?family=Didact Gothic"
+              rel="stylesheet"
+        <meta charset="utf-8" />
+        <style type="text/css">
+            a {text-decoration:none;}
+            #main-header{
+              background-color: orange;
+              color:white;
+              padding-left: 20px;
+              padding-bottom: 0.1px;
+              padding-top: 0.1px;
+            }
+            #lisaaSmoothie{
+                padding-left: 20px;
+            }
+            #second-form{
+                padding-left: 20px; 
+            }
+            h2{
+                color:orange;
+                padding-left: 20px;
+            }
+            #input1{
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+            #input2{
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+            select{
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+            hr{
+                border-top: 3px dashed #8c8b8b;
+                text-align: center;
+            }
+            ul{
+                list-style-type: square;
+            }
+            body{
+                font-family: 'Didact Gothic';
+                margin-bottom: 30px;
+            }
+            select{
+                background-color: white;
+                border-color: lightgray;
+                font-size: 14px;
+            }
+            
+        </style>
+        <script>
+            function nimiAnnettu() {
+                var x = document.forms["lisaaSmoothie"]["nimi"].value;
+                if (x === "") {
+                    alert("Anna smoothielle nimi!");
+                    return false;
+                }  
+            }
+        </script>
+    </head>
+
+    <body >
+        <header id = "main-header">
+            <h1>Smoothiet</h1>
+        </header>
+        
+
+        <ul>
+            <li th:each="annos: ${annokset}">
+                <a th:href="${'/annokset/' + annos.id}"><span th:text="${annos.nimi}">smoothien nimi</span></a>
+                <form method = "POST" th:action = "@{~/annokset/{annosId}/poista(annosId=${annos.id})}"><input type="submit" value = "Poista"/></form>
+            </li>    
+        </ul>
+        <hr/>
+        <h2>
+            Lisää uusi
+        </h2>
+        <form id="lisaaSmoothie" method ="POST" action="/annokset" onsubmit="return nimiAnnettu()">
+            Smoothien nimi:<br/>
+            <input  id="input1" type="text" name ="nimi"/><br/>
+            <input type="submit" value ="Lisää"/>
+        </form>
+        <br/>
+        <hr/>
+        <h2>
+            Lisää raaka-aineita
+        </h2>
+        <form id="second-form" method="POST" action="/annokset/raakaAine">
+            Smoothien nimi:<br/>
+            <select name ="annos">
+                <option th:each="annos: ${annokset}" ><span th:text="${annos.nimi}"</span></option>
+            </select><br/>
+            Lisättävä raaka-aine:<br/>
+            <select name ="raakaAine">
+                <option th:each="raakaAine: ${raakaAineet}" ><span th:text="${raakaAine.nimi}"</span></option>
+            </select> <br/>
+            Järjestys:<br/>
+            <input id="input2" type="text" name ="jarjestys"/><br/>
+            Määrä:<br/>
+            <input id="input2" type="text" name ="maara"/><br/>
+            Ohje:<br/>
+            <input id="input2" type="text" name ="ohje"/><br/>
+            
+            <input type="submit" value ="Lisää"/> 
+        </form>
+        
+        <ul>
+            <li>
+                <p><a href="/">Smoothielistaukseen</a></p>
+            </li>
+        </ul>
+
+        
+    </body>
+</html>

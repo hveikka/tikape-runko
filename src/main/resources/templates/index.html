@@ -1,16 +1,52 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <title>Otsikko</title>
+    <head> 
+        <title>Smoothiet</title>
+        <link href="https://fonts.googleapis.com/css?family=Didact Gothic"
+              rel="stylesheet"
         <meta charset="utf-8" />
+        <style type="text/css">
+            a {text-decoration:none;}
+            header{
+                background-color: orange;
+                color: white;
+                padding-left: 20px;
+                padding-bottom: 0.1px;
+                padding-top: 0.1px;
+            }
+            hr{
+                border-top: 3px dashed #8c8b8b;
+                text-align: center;
+            }
+            ul{
+                list-style-type: square;
+            }
+            body{
+                font-family: 'Didact Gothic';
+            }
+        </style>
     </head>
 
     <body>
-        <h1>Heippa vaan!</h1>
+        <header>
+            <h1>Smoothielista</h1>
+        </header>
+        <ul>
+            <li th:each="annos: ${annokset}">
+                <a th:href="${'/annokset/' + annos.id}"><span th:text="${annos.nimi}">smoothien nimi</span></a>
+            </li>
+        </ul>
+        <hr/>
 
-        <p>Ja .. <span th:text="${viesti}">jotain?</span></p>
-
-        <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
+        <ul>
+            <li>
+                <a href="/annokset">Luo uusi smoothie</a>
+            </li>
+            <li
+                <p><a href="/raakaaineet">Tarkastele ja lisää aineksia</a></p>
+            </li>
+        </ul>
+        
     </body>
 </html>

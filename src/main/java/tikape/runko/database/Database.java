@@ -39,12 +39,7 @@ public class Database {
         ArrayList<String> lista = new ArrayList<>();
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        lista.add("CREATE TABLE Opiskelija (id integer PRIMARY KEY, nimi varchar(255));");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Platon');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Aristoteles');");
-        lista.add("INSERT INTO Opiskelija (nimi) VALUES ('Homeros');");
-        
-        /*
+    
         lista.add("CREATE TABLE Annos (id integer PRIMARY KEY, nimi varchar(50));");
         lista.add("CREATE TABLE RaakaAine (id integer PRIMARY KEY, nimi varchar(50));");
         lista.add("CREATE TABLE AnnosRaakaAine (AnnosID integer, RaakaAineID integer, jarjestys varchar(50), "
@@ -66,7 +61,7 @@ public class Database {
         lista.add("INSERT INTO AnnosRaakaAine (AnnosID, RaakaAineID, maara) VALUES (2, 5, '2 kpl');");
         lista.add("INSERT INTO AnnosRaakaAine (AnnosID, RaakaAineID, maara) VALUES (2, 2, '1 kpl');");
         lista.add("INSERT INTO AnnosRaakaAine (AnnosID, RaakaAineID, maara) VALUES (2, 3, '3 dl');");
-        */
+        
 
         return lista;
     }

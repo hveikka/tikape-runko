@@ -1,0 +1,88 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Raaka-aineet</title>
+        <link href="https://fonts.googleapis.com/css?family=Didact Gothic"
+              rel="stylesheet"
+        <meta charset="utf-8" />
+        <style type = "text/css">
+            a {text-decoration:none;}
+            #main-header {
+                background-color: orange;
+                color: white;
+                padding-left: 20px;
+                padding-bottom: 0.1px;
+                padding-top: 0.1px;
+            }
+            h2{
+                color:orange;
+                padding-left: 20px;
+            }
+            #raakaAineForm{
+                padding-left: 20px;
+            }
+            #input1{
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+            hr{
+                border-top: 3px dashed #8c8b8b;
+                text-align: center;
+            }
+            ul{
+                list-style-type: square;
+            }
+            body{
+                font-family: 'Didact Gothic';
+                margin-bottom: 30px;
+            }      
+        </style>
+        <script>
+            function nimiAnnettu() {
+                var x = document.forms["raakaAineForm"]["nimi"].value;
+                if (x === "") {
+                    alert("Anna raaka-aineelle nimi!");
+                    return false;
+                }  
+            }
+        </script>
+        
+        
+    </head>
+
+    <body>
+        <header id = "main-header">
+            <h1>Raaka-aineet</h1>
+        </header>
+        
+        <ul>
+            <li th:each="raakaAine: ${raakaAineet}">
+                <span th:text="${raakaAine.nimi}">raakaAineen nimi</span>
+                <form method = "POST" th:action = "@{~/raakaaineet/{raakaAineId}/poista(raakaAineId=${raakaAine.id})}"><input type="submit" value = "Poista"/></form>
+            </li>
+        </ul>
+        <hr/>
+       
+        <h2>
+            Lisää uusi raaka-aine
+        </h2>
+        
+        <form id="raakaAineForm"; method ="POST" action="/raakaaineet" onsubmit="return nimiAnnettu()">
+            Raaka-aineen nimi:<br/>
+            <input id="input1"type="text" name ="nimi"/><br/>
+            <input type="submit" value ="Lisää"/>
+        </form><br/>
+        <hr/>
+        
+        <ul>
+            <li>
+                <a href="/raakaaineet/tilastoja">Raaka-aine tilastoja</a>
+            </li>
+            <li>
+                <a href="/">Smoothielistaukseen</a>
+            </li>
+        </ul>
+        
+    </body>
+</html>
