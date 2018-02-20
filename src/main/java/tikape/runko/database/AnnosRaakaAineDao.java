@@ -65,7 +65,8 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
     
     public List<AnnosRaakaAine> haeAnnoksenRaakaAineet(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = " + key);
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM AnnosRaakaAine WHERE AnnosID = ?");
+        stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
         List<AnnosRaakaAine> annosRaakaAineet = new ArrayList<>();
@@ -96,7 +97,8 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
     
     public void poistaAnnos(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE AnnosID = " + key);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE AnnosID = ?");
+        stmt.setInt(1, key);
         stmt.executeUpdate();
         stmt.close();
         conn.close();
@@ -104,7 +106,8 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
     
     public void poistaRaakaAine(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE RaakaAineID = " + key);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM AnnosRaakaAine WHERE RaakaAineID = ?");
+        stmt.setInt(1, key);
         stmt.executeUpdate();
         stmt.close();
         conn.close();
@@ -118,13 +121,13 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT (AnnosID) FROM "
                 + "AnnosRaakaAine WHERE RaakaAineID = ?");
         
-        for (int i = 0; i < raakaAineet.size(); i++) {
-            stmt.setInt(1, raakaAineet.get(i).getId());
+        for (RaakaAine raakaAine: raakaAineet) {
+            stmt.setInt(1, raakaAine.getId());
             
             ResultSet rs = stmt.executeQuery();
             rs.next();
             
-            kayttomaarat.put(raakaAineet.get(i).getNimi(), rs.getInt(1));   
+            kayttomaarat.put(raakaAine.getNimi(), rs.getInt(1));   
         }
         
         stmt.close();
@@ -140,13 +143,14 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
                 + "AnnosRaakaAine WHERE AnnosID = ?");
         
         int summa = 0;
-        for (int i = 0; i < annokset.size(); i++) {
-            stmt.setInt(1, annokset.get(i).getId());
+        for (Annos annos: annokset) {
+            stmt.setInt(1, annos.getId());
             
             ResultSet rs = stmt.executeQuery();
             rs.next();
             summa+=rs.getInt(1);
         }
+        
         stmt.close();
         conn.close();
         

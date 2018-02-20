@@ -29,7 +29,7 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     public RaakaAine findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM RaakaAine WHERE id = ?");
-        stmt.setObject(1, key);
+        stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
@@ -74,7 +74,8 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM RaakaAine WHERE id = " + key);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM RaakaAine WHERE id = ?");
+        stmt.setInt(1, key);
         stmt.executeUpdate();
         stmt.close();
         conn.close();
