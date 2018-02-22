@@ -173,9 +173,14 @@ public class AnnosRaakaAineDao implements Dao<AnnosRaakaAine, Integer> {
         stmt.setInt(2, annosRaakaAine.getRaakaAine().getId());
         
         ResultSet rs = stmt.executeQuery();
+        
         if (rs.next()) {
+            conn.close();
             return null;
         }
+        
+        stmt.close();
+        rs.close();
 
         stmt = conn.prepareStatement("INSERT INTO AnnosRaakaAine"
                 + " (AnnosID, RaakaAineID, jarjestys, maara, ohje)"
