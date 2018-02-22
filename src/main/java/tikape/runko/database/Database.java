@@ -13,10 +13,10 @@ public class Database {
     }
 
     public Connection getConnection() throws SQLException {
-//        String dbUrl = System.getenv("JDBC_DATABASE_URL");
-//        if (dbUrl != null && dbUrl.length() > 0) {
-//            return DriverManager.getConnection(dbUrl);
-//        }
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        if (dbUrl != null && dbUrl.length() > 0) {
+            return DriverManager.getConnection(dbUrl);
+        }
         return DriverManager.getConnection(databaseAddress);
     }
 
@@ -44,8 +44,8 @@ public class Database {
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
     
-        lista.add("CREATE TABLE Annos (id integer PRIMARY KEY, nimi varchar(50));");
-        lista.add("CREATE TABLE RaakaAine (id integer PRIMARY KEY, nimi varchar(50));");
+        lista.add("CREATE TABLE Annos (id integer SERIAL PRIMARY KEY, nimi varchar(50));");
+        lista.add("CREATE TABLE RaakaAine (id integer SERIAL PRIMARY KEY, nimi varchar(50));");
         lista.add("CREATE TABLE AnnosRaakaAine (AnnosID integer, RaakaAineID integer, jarjestys varchar(50), "
                 + "maara varchar(30), ohje varchar(100),"
                 + " FOREIGN KEY (AnnosID) REFERENCES Annos(id), "
