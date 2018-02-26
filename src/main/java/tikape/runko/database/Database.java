@@ -48,8 +48,8 @@ public class Database {
         lista.add("CREATE TABLE RaakaAine (id SERIAL PRIMARY KEY, nimi varchar(50));");
         lista.add("CREATE TABLE AnnosRaakaAine (AnnosID integer, RaakaAineID integer, jarjestys varchar(50), "
                 + "maara varchar(30), ohje varchar(100),"
-                + " FOREIGN KEY (AnnosID) REFERENCES Annos(id), "
-                + "FOREIGN KEY (RaakaAineID) REFERENCES RaakaAine(id));");
+                + " FOREIGN KEY (AnnosID) REFERENCES Annos(id) ON DELETE CASCADE, "
+                + "FOREIGN KEY (RaakaAineID) REFERENCES RaakaAine(id) ON DELETE CASCADE);");
         lista.add("INSERT INTO Annos (nimi) VALUES ('Strawberry Banana');");
         lista.add("INSERT INTO Annos (nimi) VALUES ('Tropical Island Smoothie');");
         lista.add("INSERT INTO RaakaAine (nimi) VALUES ('Mansikka');");
